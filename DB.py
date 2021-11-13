@@ -3,7 +3,7 @@ import hashlib
 
 
 def entrance(login, new_password):
-    DB = sqlite3.connect("DB.db")
+    DB = sqlite3.connect("dist/DB.db")
     cursor = DB.cursor()
     result = cursor.execute("""SELECT password FROM users
                 WHERE login = ?""", (login,)).fetchall()
@@ -17,7 +17,7 @@ def entrance(login, new_password):
 
 
 def registring(name, login, password):
-    DB = sqlite3.connect("DB.db")
+    DB = sqlite3.connect("dist/DB.db")
     cursor = DB.cursor()
 
     # salt = os.urandom(32)
@@ -45,7 +45,7 @@ def hash_password(password, salt):
 
 
 def get_name(login):
-    DB = sqlite3.connect("DB.db")
+    DB = sqlite3.connect("dist/DB.db")
     cursor = DB.cursor()
     result = cursor.execute("""SELECT name FROM users
                     WHERE login = ?""", (login,)).fetchall()
@@ -55,7 +55,7 @@ def get_name(login):
 def set_statistic(restart, win, game):
     id_user = get_id()
     lost_restart, lost_win, lost_game = get_statistic()
-    DB = sqlite3.connect("DB.db")
+    DB = sqlite3.connect("dist/DB.db")
     cursor = DB.cursor()
     restart += lost_restart
     win += lost_win
@@ -67,7 +67,7 @@ def set_statistic(restart, win, game):
 
 def get_statistic():
     id_user = get_id()
-    DB = sqlite3.connect("DB.db")
+    DB = sqlite3.connect("dist/DB.db")
     cursor = DB.cursor()
     result = cursor.execute("""SELECT restart, win, game FROM statistic
                         WHERE id_user = ?""", (id_user,)).fetchall()
@@ -79,7 +79,7 @@ def get_statistic():
 
 def get_id():
     login = get_login()
-    DB = sqlite3.connect("DB.db")
+    DB = sqlite3.connect("dist/DB.db")
     cursor = DB.cursor()
     result = cursor.execute("""SELECT id FROM users
                         WHERE login = ?""", (login,)).fetchall()
